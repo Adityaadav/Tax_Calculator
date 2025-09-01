@@ -1,6 +1,6 @@
 # 💰 Tax Calculator (ASP.NET Core + SQL Server)
 
-![.NET](https://img.shields.io/badge/.NET-6.0-blue)
+![.NET](https://img.shields.io/badge/.NET-9.0-blue)
 ![Database](https://img.shields.io/badge/SQL%20Server-Enabled-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Project-Active-success)
