@@ -1,0 +1,62 @@
+﻿
+
+
+@model Tax_Calculator.Models.TaxPayerBankAccount
+@{
+    ViewBag.Title = "Step 2 – Bank Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12 col-lg-10 mx-auto">
+            <h2 class="mb-3">Step 2: Bank Details</h2>
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+            </div>
+
+            <!-- Use MVC Form Helper -->
+            @using (Html.BeginForm("BankDetails", "TaxWizard", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- Bank Name -->
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.BankName, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", placeholder = "Bank name" })
+                                @Html.ValidationMessageFor(m => m.BankName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Account Number -->
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.BankAccountNumber, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.BankAccountNumber, new { @class = "form-control", placeholder = "Account number" })
+                                @Html.ValidationMessageFor(m => m.BankAccountNumber, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Account Type -->
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.AccountType, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.AccountType, new SelectList(new[] { "Savings", "Current" }), "Select Account Type", new { @class = "form-select" })
+                                @Html.ValidationMessageFor(m => m.AccountType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="@Url.Action("BasicDetails", "TaxWizard")" class="btn btn-outline-secondary">Back</a>
+                    <div class="d-flex gap-2">
+                        <a href="@Url.Action("BasicDetails", "TaxWizard")" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save & Continue</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

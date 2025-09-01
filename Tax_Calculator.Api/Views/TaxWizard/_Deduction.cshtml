@@ -1,0 +1,451 @@
+﻿@model Tax_Calculator.Models.DeductionsViewModel
+@{
+    ViewData["Title"] = "Deductions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2> Deductions</h2>
+<hr />
+
+<div class="progress mb-4">
+    <div class="progress-bar bg-success" style="width: 80%">Step 4 of 5</div>
+</div>
+
+@using (Html.BeginForm("Deductions", "TaxWizard", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* @Html.HiddenFor(m => m.ConnectionDetailsID) *@
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">HRA Exemption</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.HRA.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.HRA.ActualHRAReceived)
+                @Html.TextBoxFor(m => m.HRA.ActualHRAReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.HRA.ActualHRAReceived, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.HRA.RentPaidAnnually)
+                @Html.TextBoxFor(m => m.HRA.RentPaidAnnually, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.HRA.RentPaidAnnually, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-info text-white">Entertainment & Professional Tax</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Entertainment.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Entertainment.ProfessionalTaxPaid)
+                @Html.TextBoxFor(m => m.Entertainment.ProfessionalTaxPaid, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Entertainment.ProfessionalTaxPaid, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.Entertainment.EntertainmentAllowanceReceived)
+                @Html.TextBoxFor(m => m.Entertainment.EntertainmentAllowanceReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Entertainment.EntertainmentAllowanceReceived, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-warning text-dark">Employee Contribution to NPS</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.EmployeeNPS.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.EmployeeNPS.Amount80CCD1, "Amount 80CCD(1)")
+                @Html.TextBoxFor(m => m.EmployeeNPS.Amount80CCD1, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.EmployeeNPS.Amount80CCD1, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.EmployeeNPS.Amount80CCD1B, "Amount 80CCD(1B)")
+                @Html.TextBoxFor(m => m.EmployeeNPS.Amount80CCD1B, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.EmployeeNPS.Amount80CCD1B, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">LTA Allowance</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.LTA.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.LTA.ClaimedAmount)
+                @Html.TextBoxFor(m => m.LTA.ClaimedAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.LTA.ClaimedAmount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.LTA.ActualTravelExpense)
+                @Html.TextBoxFor(m => m.LTA.ActualTravelExpense, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.LTA.ActualTravelExpense, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-success text-white">Medical Insurance Premium (80D)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Medical.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Medical.PremiumPaidSelfFamily)
+                @Html.TextBoxFor(m => m.Medical.PremiumPaidSelfFamily, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Medical.PremiumPaidSelfFamily, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.Medical.PreventiveHealthCheckup)
+                @Html.TextBoxFor(m => m.Medical.PreventiveHealthCheckup, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Medical.PreventiveHealthCheckup, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-danger text-white">Disabled Individual (80U)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Disabled.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Disabled.DisabilityType)
+                @Html.TextBoxFor(m => m.Disabled.DisabilityType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Disabled.DisabilityType, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Disabled.DisabilityPercentage, "Disability (%)")
+                @Html.TextBoxFor(m => m.Disabled.DisabilityPercentage, new { @class = "form-control", type = "number", step = "1", min = "0", max = "100" })
+                @Html.ValidationMessageFor(m => m.Disabled.DisabilityPercentage, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-check mb-3">
+                @Html.CheckBoxFor(m => m.Disabled.IsSevereDisability, new { @class = "form-check-input", id = "SevereDisability" })
+                <label class="form-check-label" for="SevereDisability">Severe Disability?</label>
+                @Html.ValidationMessageFor(m => m.Disabled.IsSevereDisability, "", new { @class = "text-danger d-block" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Disabled.DeductionClaimed)
+                @Html.TextBoxFor(m => m.Disabled.DeductionClaimed, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Disabled.DeductionClaimed, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.Disabled.MedicalAuthority)
+                @Html.TextBoxFor(m => m.Disabled.MedicalAuthority, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Disabled.MedicalAuthority, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">Interest on Electric Vehicle Loan</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.ElectricVehicleLoan.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.LenderName)
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.LenderName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.LenderName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.LoanAccountNumber)
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.LoanAccountNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.LoanAccountNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.LoanSanctionDate)
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.LoanSanctionDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.LoanSanctionDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.ElectricVehicleMakeModel, "EV Make/Model")
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.ElectricVehicleMakeModel, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.ElectricVehicleMakeModel, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.InterestAmountPaid)
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.InterestAmountPaid, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.InterestAmountPaid, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ElectricVehicleLoan.DeductionClaimed)
+                    @Html.TextBoxFor(m => m.ElectricVehicleLoan.DeductionClaimed, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.ElectricVehicleLoan.DeductionClaimed, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Employer Contribution to NPS</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.EmployerNPS.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.EmployerNPS.EmployerName)
+                @Html.TextBoxFor(m => m.EmployerNPS.EmployerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EmployerNPS.EmployerName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.EmployerNPS.ContributionAmount)
+                @Html.TextBoxFor(m => m.EmployerNPS.ContributionAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.EmployerNPS.ContributionAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">Interest on Home Loan (Self-Occupied)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.HomeLoanSelf.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.HomeLoanSelf.LenderName)
+                @Html.TextBoxFor(m => m.HomeLoanSelf.LenderName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HomeLoanSelf.LenderName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.HomeLoanSelf.PropertyAddress)
+                @Html.TextBoxFor(m => m.HomeLoanSelf.PropertyAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HomeLoanSelf.PropertyAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.HomeLoanSelf.InterestAmountPaid)
+                    @Html.TextBoxFor(m => m.HomeLoanSelf.InterestAmountPaid, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.HomeLoanSelf.InterestAmountPaid, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.HomeLoanSelf.ClaimedAmount)
+                    @Html.TextBoxFor(m => m.HomeLoanSelf.ClaimedAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.HomeLoanSelf.ClaimedAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">Interest on Home Loan (Let-Out)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.HomeLoanLetOut.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.HomeLoanLetOut.LenderName)
+                @Html.TextBoxFor(m => m.HomeLoanLetOut.LenderName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HomeLoanLetOut.LenderName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.HomeLoanLetOut.PropertyAddress)
+                @Html.TextBoxFor(m => m.HomeLoanLetOut.PropertyAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HomeLoanLetOut.PropertyAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.HomeLoanLetOut.InterestAmountPaid)
+                    @Html.TextBoxFor(m => m.HomeLoanLetOut.InterestAmountPaid, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.HomeLoanLetOut.InterestAmountPaid, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.HomeLoanLetOut.RentReceived)
+                    @Html.TextBoxFor(m => m.HomeLoanLetOut.RentReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.HomeLoanLetOut.RentReceived, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-info text-white">Donation to Political Party / Trust</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Donation.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Donation.RecipientType)
+                    @Html.TextBoxFor(m => m.Donation.RecipientType, new { @class = "form-control", placeholder = "Party / Trust" })
+                    @Html.ValidationMessageFor(m => m.Donation.RecipientType, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Donation.RecipientName)
+                    @Html.TextBoxFor(m => m.Donation.RecipientName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Donation.RecipientName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Donation.DonationAmount)
+                    @Html.TextBoxFor(m => m.Donation.DonationAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Donation.DonationAmount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Donation.DonationDate)
+                    @Html.TextBoxFor(m => m.Donation.DonationDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.Donation.DonationDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Donation.PaymentMode)
+                    @Html.TextBoxFor(m => m.Donation.PaymentMode, new { @class = "form-control", placeholder = "NEFT/UPI/Cheque" })
+                    @Html.ValidationMessageFor(m => m.Donation.PaymentMode, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Donation.ReceiptNumber)
+                    @Html.TextBoxFor(m => m.Donation.ReceiptNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Donation.ReceiptNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Conveyance Allowance</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Conveyance.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Conveyance.AmountReceived)
+                    @Html.TextBoxFor(m => m.Conveyance.AmountReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Conveyance.AmountReceived, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Conveyance.ExemptAmount)
+                    @Html.TextBoxFor(m => m.Conveyance.ExemptAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Conveyance.ExemptAmount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(m => m.Conveyance.IsSpeciallyAbled, new { @class = "form-check-input", id = "ConvIsSA" })
+                        <label class="form-check-label" for="ConvIsSA">Specially Abled?</label>
+                        @Html.ValidationMessageFor(m => m.Conveyance.IsSpeciallyAbled, "", new { @class = "text-danger d-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-warning text-dark">Transport Allowance (Specially Abled)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.TransportAllowance.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.TransportAllowance.DisabilityType)
+                    @Html.TextBoxFor(m => m.TransportAllowance.DisabilityType, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TransportAllowance.DisabilityType, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.TransportAllowance.AmountReceived)
+                    @Html.TextBoxFor(m => m.TransportAllowance.AmountReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.TransportAllowance.AmountReceived, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.TransportAllowance.ExemptAmount)
+                    @Html.TextBoxFor(m => m.TransportAllowance.ExemptAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.TransportAllowance.ExemptAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-success text-white">Agniveer Corpus Fund</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Agniveer.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Agniveer.EmployeeContribution)
+                    @Html.TextBoxFor(m => m.Agniveer.EmployeeContribution, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Agniveer.EmployeeContribution, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Agniveer.GovtContribution)
+                    @Html.TextBoxFor(m => m.Agniveer.GovtContribution, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Agniveer.GovtContribution, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Agniveer.TotalDeductionClaimed)
+                    @Html.TextBoxFor(m => m.Agniveer.TotalDeductionClaimed, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Agniveer.TotalDeductionClaimed, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Agniveer.EnrollmentDate)
+                    @Html.TextBoxFor(m => m.Agniveer.EnrollmentDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.Agniveer.EnrollmentDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">Exemption 10C</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Exemption10C.ConnectionDetailsID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Exemption10C.EmployerName)
+                @Html.TextBoxFor(m => m.Exemption10C.EmployerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Exemption10C.EmployerName, "", new { @class = "text-danger" })
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Exemption10C.CompensationReceived)
+                    @Html.TextBoxFor(m => m.Exemption10C.CompensationReceived, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Exemption10C.CompensationReceived, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Exemption10C.ExemptAmount)
+                    @Html.TextBoxFor(m => m.Exemption10C.ExemptAmount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.Exemption10C.ExemptAmount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Exemption10C.RetirementDate)
+                    @Html.TextBoxFor(m => m.Exemption10C.RetirementDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.Exemption10C.RetirementDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Saving Bank Interest</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.SavingBankInterest.ConnectionDetailsID)
+            <div class="row g-3">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.SavingBankInterest.BankName)
+                    @Html.TextBoxFor(m => m.SavingBankInterest.BankName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.SavingBankInterest.BankName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.SavingBankInterest.AccountNumber)
+                    @Html.TextBoxFor(m => m.SavingBankInterest.AccountNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.SavingBankInterest.AccountNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.SavingBankInterest.InterestEarned)
+                    @Html.TextBoxFor(m => m.SavingBankInterest.InterestEarned, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.SavingBankInterest.InterestEarned, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.SavingBankInterest.DeductionClaimed)
+                    @Html.TextBoxFor(m => m.SavingBankInterest.DeductionClaimed, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                    @Html.ValidationMessageFor(m => m.SavingBankInterest.DeductionClaimed, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-success text-white">Deduction 80C (Total)</div>
+        <div class="card-body">
+            @Html.HiddenFor(m => m.Deduction80C.ConnectionDetailsID)
+            <div class="form-group mb-0">
+                @Html.LabelFor(m => m.Deduction80C.Total80CDeductionClaimed)
+                @Html.TextBoxFor(m => m.Deduction80C.Total80CDeductionClaimed, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+                @Html.ValidationMessageFor(m => m.Deduction80C.Total80CDeductionClaimed, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+        <a href="@Url.Action("IncomeDetails", "TaxWizard")" class="btn btn-outline-secondary">Back</a>
+        <div class="d-flex gap-2">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save & Continue</button>
+        </div>
+    </div>
+    @* <div class="d-flex justify-content-between mt-4">
+        <a href="@Url.Action("IncomeDetails", "TaxWizard")" class="btn btn-outline-secondary">Back</a>
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div> *@
+}

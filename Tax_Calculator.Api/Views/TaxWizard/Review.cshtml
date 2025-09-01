@@ -1,0 +1,18 @@
+﻿@model Tax_Calculator.Api.Services.TaxSummary
+@{
+    ViewData["Title"] = "Review Tax Summary";
+}
+
+<h2>Review Your Tax Summary</h2>
+
+<p><strong>Total Income:</strong> @Model.TotalIncome</p>
+<p><strong>Total Deductions:</strong> @Model.TotalDeductions</p>
+<p><strong>Taxable Income:</strong> @Model.TaxableIncome</p>
+<p><strong>Total Tax Payable:</strong> @Model.TotalTaxPayable</p>
+<p><strong>Tax Regime:</strong> @Model.TaxRegimeId</p>
+<p><strong>Senior Citizen:</strong> @(Model.IsSeniorCitizen ? "Yes" : "No")</p>
+<p><strong>Super Senior Citizen:</strong> @(Model.IsSuperSeniorCitizen ? "Yes" : "No")</p>
+
+<form method="post" asp-action="ConfirmAndSubmit">
+    <button type="submit">Confirm & Submit</button>
+</form>

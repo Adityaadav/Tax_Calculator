@@ -1,0 +1,35 @@
+﻿@model Tax_Calculator.Models.ResidentStatus
+@{
+    ViewData["Title"] = "Resident Status Management";
+}
+
+<h2>Resident Status</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Status Name:</label>
+        <input asp-for="StatusName" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<hr />
+
+<h3>Existing Statuses</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var status in @StatusName)
+        {
+            <tr>
+                <td>@status.ResidentStatusID</td>
+                <td>@status.StatusName</td>
+            </tr>
+        } *@
+    </tbody>
+</table>
